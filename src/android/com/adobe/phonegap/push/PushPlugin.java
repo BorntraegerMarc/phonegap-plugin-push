@@ -474,7 +474,13 @@ public class PushPlugin extends CordovaPlugin implements PushConstants {
   @Override
   public void initialize(CordovaInterface cordova, CordovaWebView webView) {
     super.initialize(cordova, webView);
-    gForeground = true;
+    Bundle bundle = cordova.getActivity().getIntent().getExtras();
+    if (bundle != null) {
+      boolean startInBackground = bundle.getBoolean(START_IN_BACKGROUND,false);
+      gForeground = !startInBackground;
+    } else {
+      gForeground = false;
+    }
   }
 
   @Override
